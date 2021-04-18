@@ -1,13 +1,12 @@
-# David Vedvick
 # Project
 
 # %%
-# 1. Load the patient data from “patients.csv” file.
+# Load the patient data from "healthcare_data.csv" file.
 
 import pandas as pd
 from sklearn.pipeline import Pipeline
 
-patients = pd.read_csv('healthcare-dataset-stroke-data.csv').replace('N/A', 0)
+patients = pd.read_csv('healthcare_data.csv').fillna(0)
 patients.describe()
 
 # %%
@@ -37,7 +36,7 @@ numerical_pipeline = Pipeline([
 ])
 
 column_tx = ColumnTransformer([
-    ('Categorical', OneHotEncoder(drop='first'), categorical_columns),
+    ('Categorical', one_hot, categorical_columns),
     ('Numerical', numerical_pipeline, numerical_columns),],
     remainder='drop')
 
@@ -66,7 +65,6 @@ from sklearn import svm
 from sklearn.decomposition import PCA
 from sklearn.metrics import confusion_matrix, r2_score, mean_squared_error
 from sklearn.model_selection import train_test_split
-import math
 
 def print_metrics(y_true, y_predict):
     print(f'R2 Score: {r2_score(y_true, y_predict)}')
